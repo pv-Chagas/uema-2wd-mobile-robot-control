@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel do robô móvel — deslocamento com realimentação</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1>Painel de controle do robô móvel<small>Do comando direto à realimentação: P, I, D, PI, PD e PID</small></h1>
+  <div class="tabs"><button class="tab" id="tabS" aria-pressed="true">Sintonia</button><button class="tab" id="tabR" aria-pressed="false">Corrigir percurso</button><button class="tab" id="tabD" aria-pressed="false">Controle manual</button><button class="tab" id="tabA" aria-pressed="false">Comparativo</button><button class="tab" id="tabM" aria-pressed="false">Varredura e mapa</button></div>
+  <div class="conn">
+    <span><span class="dot" id="dot"></span><span id="connTxt">Offline</span></span>
+    <button class="btn primary" id="btnConn" title="Conecta por Bluetooth. Shift + clique escolhe outro robô">Bluetooth</button>
+    <button class="btn primary" id="btnUsb" title="Conecta pelo cabo USB (Chrome ou Edge)">USB</button>
+    <button class="btn" id="btnDemo" title="Testa a interface sem o robô, com dados fictícios (não use nos resultados)">Simulação (sem robô)</button>
+  </div>
+</header>
+<div id="banner">Simulação ativa: os números são fictícios e servem só para experimentar a interface. Não os apresente como resultado dos testes.</div>
+
+<main id="scrS">
+<aside>
+  <div class="card">
+    <h2>1. Estratégia de controle</h2>
+    <div class="modes"><button class="mode wide" data-mode="OL" aria-pressed="false">Malha aberta</button></div>
+    <div class="glabel">Malha fechada (odometria como retroalimentação)</div>
+    <div class="modes">
+      <button class="mode" data-mode="P" aria-pressed="false">P</button><button class="mode" data-mode="I" aria-pressed="false">I</button><button class="mode" data-mode="D" aria-pressed="false">D</button>
+      <button class="mode" data-mode="PI" aria-pressed="false">PI</button><button class="mode" data-mode="PD" aria-pressed="false">PD</button><button class="mode" data-mode="PID" aria-pressed="false">PID</button>
+    </div>
+    <div class="explain" id="explain"></div>
+  </div>
+  <div class="card">
+    <h2>2. Alvo <span>onde o robô deve parar</span></h2>
+    <div class="row w2"><label for="n_sp">Posição</label><input type="range" id="s_sp" min="0" max="1" step="0.01"><input type="number" id="n_sp" min="0" max="1" step="0.01"></div>
+    <div class="quick"><button class="btn sm" data-sp="0.25">0,25</button><button class="btn sm" data-sp="0.5">0,50</button><button class="btn sm" data-sp="0.75">0,75</button><button class="btn sm" data-sp="1">1,00</button></div>
+    <div class="unit" style="margin-top:6px">Valor em metros, de 0 a 1 m.</div>
+  </div>
+  <div class="card">
+    <h2 id="pTitle">3. Ajuste dos ganhos <span>memorizados por controle</span></h2>
+    <div id="closedP">
+      <div class="row" id="r_kp"><label for="n_kp">Kp</label><input type="range" id="s_kp" min="0" max="300" step="0.5"><input type="number" id="n_kp" min="0" max="300" step="0.5"></div>
+      <div class="row" id="r_ki"><label for="n_ki">Ki</label><input type="range" id="s_ki" min="0" max="300" step="0.5"><input type="number" id="n_ki" min="0" max="300" step="0.5"></div>
+      <div class="row" id="r_kd"><label for="n_kd">Kd</label><input type="range" id="s_kd" min="0" max="100" step="0.1"><input type="number" id="n_kd" min="0" max="100" step="0.1"></div>
+      <div class="unit">O erro entra em metros e a saída sai em % de PWM. Os ganhos esmaecidos ficam inativos neste controle. Os campos ficam travados enquanto o robô executa: ajuste os ganhos entre um teste e outro.</div>
+    </div>
+    <div id="openP" hidden>
+      <div class="row w2"><label for="n_vel">Velocidade</label><input type="range" id="s_vel" min="0" max="100" step="1"><input type="number" id="n_vel" min="0" max="100" step="1"></div>
+      <div class="row w2"><label for="n_time">Tempo</label><input type="range" id="s_time" min="0" max="10" step="0.1"><input type="number" id="n_time" min="0" max="10" step="0.1"></div>
+      <div class="unit">Potência em % de PWM e duração em segundos. Aqui a odometria apenas observa; não há correção.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>4. Comandos</h2>
+    <div class="cmds"><button class="btn primary" id="btnStart">Iniciar</button><button class="btn stop" id="btnStop">Parar</button><button class="btn" id="btnReset">Reiniciar</button></div>
+    <p class="unit" style="margin-top:10px">A tecla Esc interrompe o robô na hora. Toda execução recomeça a odometria do zero, então coloque o robô sobre a marca de 0 m antes.</p>
+  </div>
+  <div class="card">
+    <details>
+      <summary>Parâmetros da execução</summary>
+      <div class="grid2">
+        <label>Margem de acerto (mm)<input type="number" id="n_tol" min="1" max="100" step="1"></label>
+        <label>Duração limite (s)<input type="number" id="n_tmax" min="2" max="30" step="1"></label>
+        <label>Limite de PWM (%)<input type="number" id="n_pwm" min="20" max="100" step="5"></label>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_auto"><label for="chk_auto">Puxar o registro do ESP32 após cada execução</label></div>
+      <button class="btn" id="btnESP">Salvar ajustes e ganhos no ESP32</button>
+    </details>
+  </div>
+</aside>
+
+<div class="col">
+  <div class="kpis">
+    <div class="kpi"><div class="l">Controle ativo</div><div class="v t" id="k_mode">—</div></div>
+    <div class="kpi"><div class="l">Situação</div><div class="v t"><span class="chip" id="k_state">Ocioso</span></div></div>
+    <div class="kpi"><div class="l">Alvo</div><div class="v num"><span id="k_sp">0.000</span><small>m</small></div></div>
+    <div class="kpi"><div class="l">Posição X</div><div class="v num"><span id="k_x">0.000</span><small>m</small></div></div>
+    <div class="kpi"><div class="l">Posição Y</div><div class="v num"><span id="k_y">0.000</span><small>m</small></div></div>
+    <div class="kpi"><div class="l">Rumo θ</div><div class="v num"><span id="k_th">0.0</span><small>°</small></div></div>
+    <div class="kpi"><div class="l">Erro</div><div class="v num"><span id="k_e">0</span><small>mm</small></div></div>
+    <div class="kpi"><div class="l">Motor esquerdo</div><div class="v num"><span id="k_ul">0</span><small>%</small></div></div>
+    <div class="kpi"><div class="l">Motor direito</div><div class="v num"><span id="k_ur">0</span><small>%</small></div></div>
+  </div>
+  <div class="card"><div class="ch"><h2 id="runTitle">Sem execuções por enquanto</h2>
+    <div class="chk" style="margin:0"><input type="checkbox" id="chk_ghost" checked><label for="chk_ghost">Exibir execução anterior</label></div></div><p class="unit" id="runSrc"></p></div>
+  <div class="card"><div class="ch"><h2>Posição × tempo</h2><p>Alvo, margem de acerto e posição medida</p></div><canvas id="c_pos"></canvas><div class="legend" id="lg_pos"></div></div>
+  <div class="card"><div class="ch"><h2>Trajetória no plano (X × Y)</h2><p>X é o avanço e Y o desvio lateral (positivo à esquerda); o eixo Y está ampliado</p></div><canvas id="c_xy"></canvas></div>
+  <div class="card"><div class="ch"><h2>Erro × tempo</h2><p>Diferença entre o alvo e a posição, em mm</p></div><canvas id="c_err"></canvas></div>
+  <div class="card"><div class="ch"><h2>Velocidade comandada × tempo</h2><p>Potência enviada a cada motor (% de PWM)</p></div><canvas id="c_vel"></canvas>
+    <div class="legend"><span><i style="border-color:#4f7f93"></i>Motor esquerdo</span><span><i style="border-color:#b9954f"></i>Motor direito</span></div></div>
+  <div class="card"><div class="ch"><h2>Velocidade medida × tempo</h2><p>Lida nos encoders de cada roda (m/s)</p></div><canvas id="c_spd"></canvas></div>
+  <div class="card">
+    <h2>Desempenho <span id="runInfo"></span></h2>
+    <div class="metrics">
+      <div class="metric"><div class="l">Erro final</div><div class="v num" id="m_ef">—</div></div>
+      <div class="metric"><div class="l">Excesso sobre o alvo</div><div class="v num" id="m_os">—</div></div>
+      <div class="metric"><div class="l">Tempo de subida (10 a 90%)</div><div class="v num" id="m_tr">—</div></div>
+      <div class="metric"><div class="l">Tempo de acomodação (±2%)</div><div class="v num" id="m_ts">—</div></div>
+    </div>
+    <div class="tools"><button class="btn" id="btnLog">Baixar registro do ESP32</button><button class="btn" id="btnPng">Exportar imagem</button></div>
+  </div>
+  <div class="card">
+    <h2>Execuções com <span id="hMode" style="margin:0;color:var(--ink);font-weight:600"></span></h2>
+    <p class="unit">Use a estrela para eleger a execução de referência deste controle; ela entra no comparativo.</p>
+    <ol class="hist" id="hist"></ol>
+    <div class="tools" style="margin:10px 0 0"><button class="btn" id="btnCsv">Baixar dados (CSV)</button><button class="btn" id="btnSum">Baixar resumo (CSV)</button><button class="btn" id="btnClear">Limpar histórico</button></div>
+  </div>
+</div>
+</main>
+
+<div id="scrApr" hidden>
+  <div class="card"><div class="ch"><h2>Comparação dos controladores</h2><p>Execuções eleitas (estrela) ou, sem estrela, a mais recente de cada um</p></div>
+    <canvas id="c_all" style="height:280px"></canvas><div class="legend" id="lg_all"></div></div>
+  <div class="card" style="margin-top:16px"><div class="tw"><table><thead><tr><th>Controle</th><th>Ganhos</th><th>Alvo (m)</th><th>Chegou em (m)</th><th>Desvio (mm)</th><th>Excesso (mm)</th><th>Subida (s)</th><th>Estabiliz. (s)</th></tr></thead><tbody id="tbl"></tbody></table></div></div>
+</div>
+<div id="scrR" hidden>
+  <div class="card">
+    <h2>Corrigir percurso <span>manter o robô na reta</span></h2>
+    <p class="unit">Escolha como o robô compensa a diferença entre as rodas. Os campos ficam travados durante a execução e a correção só atua em malha fechada.</p>
+    <label class="unit">Método de correção<br>
+      <select id="sel_rm" style="margin-top:4px;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:#fff"><option value="0">Sem correção</option><option value="1">Proporcional pela diferença entre rodas</option><option value="2">PID de velocidade em cada roda</option></select></label>
+    <div id="boxHg" style="margin-top:12px;max-width:560px">
+      <div class="row" style="grid-template-columns:50px 1fr 74px"><label for="n_hg">Kp</label><input type="range" id="s_hg" min="0" max="1000" step="10"><input type="number" id="n_hg" min="0" max="1000" step="10"></div>
+      <div class="unit">Este ganho é só proporcional (Kp): quantos % de PWM corrigir para cada metro de diferença entre o que as duas rodas percorreram (unidade %/m). Neste método não há Ki nem Kd.</div>
+    </div>
+    <div id="boxWp" hidden style="margin-top:12px">
+      <p class="unit">Cada roda tem o seu PID de velocidade. O controlador escolhido na aba Sintonia gera a velocidade de referência (uma fração da velocidade máxima) e cada roda a segue com os ganhos abaixo.</p>
+      <div class="chk"><input type="checkbox" id="chk_same"><label for="chk_same">Usar os mesmos ganhos nas duas rodas</label></div>
+      <div class="grid2" style="max-width:760px">
+        <div><b style="font-size:14px">Roda esquerda</b><div class="row" style="grid-template-columns:34px 1fr 74px;margin:6px 0"><label for="n_kpl">Kp</label><input type="range" id="s_kpl" min="0" max="600" step="1"><input type="number" id="n_kpl" min="0" max="600" step="1"></div><div class="row" style="grid-template-columns:34px 1fr 74px;margin:6px 0"><label for="n_kil">Ki</label><input type="range" id="s_kil" min="0" max="1500" step="1"><input type="number" id="n_kil" min="0" max="1500" step="1"></div><div class="row" style="grid-template-columns:34px 1fr 74px;margin:6px 0"><label for="n_kdl">Kd</label><input type="range" id="s_kdl" min="0" max="50" step="0.1"><input type="number" id="n_kdl" min="0" max="50" step="0.1"></div></div>
+        <div><b style="font-size:14px">Roda direita</b><div class="row" style="grid-template-columns:34px 1fr 74px;margin:6px 0"><label for="n_kpr">Kp</label><input type="range" id="s_kpr" min="0" max="600" step="1"><input type="number" id="n_kpr" min="0" max="600" step="1"></div><div class="row" style="grid-template-columns:34px 1fr 74px;margin:6px 0"><label for="n_kir">Ki</label><input type="range" id="s_kir" min="0" max="1500" step="1"><input type="number" id="n_kir" min="0" max="1500" step="1"></div><div class="row" style="grid-template-columns:34px 1fr 74px;margin:6px 0"><label for="n_kdr">Kd</label><input type="range" id="s_kdr" min="0" max="50" step="0.1"><input type="number" id="n_kdr" min="0" max="50" step="0.1"></div></div>
+      </div>
+      <div class="unit">Erro em m/s, saída em % de PWM. O robô usa pré-alimentação (referência ÷ velocidade máxima), e o PID corrige o resto.</div>
+      <label class="unit" style="display:block;margin-top:8px;max-width:360px">Velocidade da roda a 100% de PWM (m/s)<input type="number" id="n_vmax" min="0.1" max="1.5" step="0.01"></label>
+    </div>
+    <label class="unit" style="display:block;margin-top:12px;max-width:360px">Distância entre as rodas (mm)<input type="number" id="n_bit" min="50" max="300" step="1"></label>
+    <button class="btn primary" id="btnRunR" style="margin-top:12px">Executar com a configuração atual</button>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="l">Diferença entre rodas agora</div><div class="v num"><span id="k_dw">0.0</span><small>mm</small></div></div>
+    <div class="kpi"><div class="l">Diferença final</div><div class="v num" id="m_df">—</div></div>
+    <div class="kpi"><div class="l">Maior diferença</div><div class="v num" id="m_dm">—</div></div>
+    <div class="kpi"><div class="l">Rumo final θ</div><div class="v num" id="m_da">—</div></div>
+    <div class="kpi"><div class="l">Y final</div><div class="v num" id="m_yf">—</div></div>
+  </div>
+  <div class="card"><div class="ch"><h2>Diferença entre rodas × tempo</h2><p>Direita menos esquerda, em mm (zero = trajetória reta)</p></div><canvas id="c_dif"></canvas></div>
+  <div class="card"><div class="ch"><h2>Trajetória no plano (X × Y)</h2>
+    <div class="chk" style="margin:0"><input type="checkbox" id="chk_eq"><label for="chk_eq">Mesma escala nos dois eixos</label></div></div>
+    <p class="unit">X é o avanço, Y é o desvio lateral (positivo à esquerda). Sem a mesma escala, o eixo Y é ampliado para mostrar desvios pequenos.</p><canvas id="c_xy2" style="height:260px"></canvas></div>
+</div>
+<div id="scrD" hidden>
+  <div class="card">
+    <h2>Condução manual <span>para levar o robô até a marca de 0 m</span></h2>
+    <p class="unit">Segure as setas do teclado (ou W, A, S, D) ou use os botões abaixo. Ao soltar, o robô para. Ele também para se a janela perder o foco ou se o link cair.</p>
+    <div class="row w2" style="max-width:520px"><label for="n_dpw">Potência</label><input type="range" id="s_dpw" min="30" max="100" step="5"><input type="number" id="n_dpw" min="30" max="100" step="5"></div>
+    <div class="pad"><span></span><button class="btn" data-k="up" aria-label="Frente">▲</button><span></span><button class="btn" data-k="left" aria-label="Girar à esquerda">◀</button><span></span><button class="btn" data-k="right" aria-label="Girar à direita">▶</button><span></span><button class="btn" data-k="down" aria-label="Ré">▼</button><span></span></div>
+    <div class="kpis">
+      <div class="kpi"><div class="l">Posição X</div><div class="v num"><span id="d_x">0.000</span><small>m</small></div></div>
+      <div class="kpi"><div class="l">Posição Y</div><div class="v num"><span id="d_y">0.000</span><small>m</small></div></div>
+      <div class="kpi"><div class="l">Rumo θ</div><div class="v num"><span id="d_th">0.0</span><small>°</small></div></div>
+      <div class="kpi"><div class="l">Velocidade esquerda</div><div class="v num"><span id="d_vl">0.00</span><small>m/s</small></div></div>
+      <div class="kpi"><div class="l">Velocidade direita</div><div class="v num"><span id="d_vr">0.00</span><small>m/s</small></div></div>
+    </div>
+    <canvas id="c_xyd" style="height:260px;margin-top:12px"></canvas>
+    <button class="btn" id="btnZero" style="margin-top:12px">Zerar odometria aqui</button>
+  </div>
+</div>
+<div id="scrM" hidden>
+  <div class="card">
+    <h2>Varredura ultrassônica <span>HC-SR04 sobre o microservo, de 0° a 180°</span></h2>
+    <div class="cmds" style="max-width:560px"><button class="btn primary" id="btnScan">Iniciar varredura</button><button class="btn stop" id="btnScanStop">Parar</button><button class="btn" id="btnMapClear">Limpar mapa</button></div>
+    <p class="unit" style="margin-top:8px">Mantenha o robô parado durante a varredura. Ângulos: 0° é a direita do robô, 90° a frente e 180° a esquerda. O mapa só mostra medições reais do sensor; na Simulação ele é fictício.</p>
+    <details style="margin-top:10px"><summary>Parâmetros e tratamento dos dados</summary>
+      <div class="grid2" style="max-width:620px"><label>Passo angular (°)<input type="number" id="n_sstep" min="2" max="10" step="1"></label><label>Espera do servo (ms)<input type="number" id="n_sset" min="50" max="600" step="10"></label><label>Medidas por ângulo<input type="number" id="n_sn" min="1" max="5" step="1"></label><label>Alcance máximo (cm)<input type="number" id="n_srange" min="50" max="400" step="10"></label><label>Temperatura ambiente (°C)<input type="number" id="n_stemp" min="0" max="50" step="1"></label><label>Sensor à frente do centro (cm)<input type="number" id="n_soff" min="0" max="30" step="0.5"></label><label>Mínimo de pontos por obstáculo<input type="number" id="n_smin" min="1" max="5" step="1"></label><label>Salto máximo entre pontos (cm)<input type="number" id="n_sjump" min="3" max="60" step="1"></label></div>
+      <div class="chk"><input type="checkbox" id="chk_ssm"><label for="chk_ssm">Suavizar com mediana entre ângulos vizinhos (remove ecos isolados)</label></div>
+      <div class="chk"><input type="checkbox" id="chk_sacc"><label for="chk_sacc">Acumular as varreduras no mapa (sem marcar, cada varredura substitui a anterior)</label></div>
+      <div class="chk"><input type="checkbox" id="chk_sghost"><label for="chk_sghost">Mostrar a varredura anterior em cinza, para ver o que mudou</label></div>
+    </details>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="l">Ângulo do sensor</div><div class="v num"><span id="s_ang">—</span><small>°</small></div></div>
+    <div class="kpi"><div class="l">Distância medida</div><div class="v num"><span id="s_dist">—</span><small>cm</small></div></div>
+    <div class="kpi"><div class="l">Pontos coletados</div><div class="v num" id="s_cnt">0</div></div>
+    <div class="kpi"><div class="l">Obstáculos detectados</div><div class="v num" id="s_obs">—</div></div>
+  </div>
+  <div class="card">
+    <h2>Medir em um ângulo <span>aponta o servo e faz uma leitura</span></h2>
+    <div class="row w2" style="max-width:520px"><label for="n_saim">Ângulo</label><input type="range" id="s_saim" min="0" max="180" step="5"><input type="number" id="n_saim" min="0" max="180" step="1"></div>
+    <button class="btn" id="btnAim">Apontar e medir</button>
+    <div class="tw" style="margin-top:8px"><table><thead><tr><th>Ângulo (°)</th><th>Distância (cm)</th></tr></thead><tbody id="aimTab"><tr class="none"><td colspan="2">nenhuma medida avulsa ainda</td></tr></tbody></table></div>
+  </div>
+  <div class="g2c">
+    <div class="card"><div class="ch"><h2>Sonar</h2><p>Leituras por ângulo e distância (visto de cima, robô olhando para cima)</p></div><canvas id="c_radar" style="height:280px"></canvas></div>
+    <div class="card"><div class="ch"><h2>Distância × ângulo</h2><p>Valores medidos em cm</p></div><canvas id="c_dist" style="height:280px"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="ch"><h2 id="mapTitle">Mapa 2D</h2><p>Frente do robô para cima, esquerda para a esquerda (cm)</p></div>
+    <canvas id="c_map" style="height:440px"></canvas>
+    <div class="legend"><span><i style="border-color:#4f7f93"></i>Pontos medidos</span><span><i style="border-color:#b0675f"></i>Obstáculo estimado</span><span><i style="border-color:#aab6bc;border-top-style:dashed"></i>Varredura anterior / alcance</span></div>
+  </div>
+  <div class="card">
+    <h2>Obstáculos detectados</h2>
+    <div class="tw"><table><thead><tr><th>#</th><th>Ângulo médio (°)</th><th>Distância mínima (cm)</th><th>Posição X (cm)</th><th>Posição Y (cm)</th><th>Largura aprox. (cm)</th><th>Pontos</th></tr></thead><tbody id="obsTab"></tbody></table></div>
+    <h2 style="margin-top:16px">Leituras da varredura</h2>
+    <div class="tw" style="max-height:280px;overflow:auto"><table><thead><tr><th>#</th><th>Ângulo (°)</th><th>Distância (cm)</th><th>X (cm)</th><th>Y (cm)</th></tr></thead><tbody id="ptTab"></tbody></table></div>
+    <div class="tools" style="margin-top:12px"><button class="btn" id="btnScanCsv">Baixar varreduras (CSV)</button><button class="btn" id="btnScanPng">Exportar imagem</button></div>
+  </div>
+</div>
+<div id="cons">
+  <div class="ch2"><button class="btn sm" id="consT" aria-expanded="false">Console</button><span class="unit">mensagens do robô e comandos de texto (digite ajuda)</span><button class="btn sm" id="consC" style="margin-left:auto">Limpar</button></div>
+  <div id="consB" hidden><div id="clog"></div><input type="text" id="cin" placeholder="Digite um comando e tecle Enter" aria-label="Comando de texto"></div>
+</div>
+<div id="toast" role="status"></div>
+
+<script src="js/script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1010" width="1600" height="1010">
+  
+  <rect x="0" y="0" width="1600" height="1010" fill="#ffffff" />
+
+  
+  <text x="36" y="40" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#0f172a">Robô móvel 2WD — Esquemático de Ligações</text>
+  <text x="36" y="61" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#475569">Alimentação dupla: Fonte 1 (9 V) na Ponte H L298N (saída +5 V alimenta o ESP32) · Fonte 2 (6 V) somente no Servo SG90 e Sensor HC-SR04 · GND comum</text>
+
+  
+  
+  <polyline points="210,378 210,88 1474,88 1474,464 1410,464" fill="none" stroke="#1e293b" stroke-width="2.4" />
+  <text x="842" y="80" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#1e293b">Barramento GND comum (Fontes 1 e 2 −, L298N, ESP32, Servo SG90, HC-SR04 e LM393)</text>
+
+  
+  
+  <polyline points="285,334 242,334 242,122 828,122 828,242" fill="none" stroke="#d97706" stroke-width="2.5" />
+  <text x="535" y="114" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#b45309">Alimentação +5 V (saída regulada da Ponte H L298N → pino 5V do ESP32)</text>
+
+  
+  <rect x="285" y="154" width="220" height="64" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.8" />
+  <text x="395" y="181" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#0f172a">Motor Esquerdo (L) + roda</text>
+  <text x="395" y="201" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="400" fill="#475569">DC 3–6 V · disco encoder 20 furos</text>
+  
+  <line x1="357" y1="218" x2="357" y2="262" stroke="#475569" stroke-width="2.4" />
+  <line x1="433" y1="218" x2="433" y2="262" stroke="#475569" stroke-width="2.4" />
+
+  
+  <rect x="285" y="262" width="220" height="476" rx="12" fill="#f5e6e8" stroke="#881337" stroke-width="1.8" />
+  <text x="395" y="298" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#0f172a">Driver L298N</text>
+  <text x="395" y="315" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="400" fill="#475569">Ponte H dupla (motores)</text>
+
+  
+  <text x="357" y="280" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">OUT1</text>
+  <text x="433" y="280" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">OUT2</text>
+  <text x="357" y="726" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">OUT3</text>
+  <text x="433" y="726" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">OUT4</text>
+
+  
+  <text x="297" y="338" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#b45309">+5V (saída)</text>
+  <text x="297" y="382" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">GND</text>
+  <text x="297" y="426" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">+12V (VMS)</text>
+
+  
+  <text x="493" y="364" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">ENA</text>
+  <text x="493" y="416" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">IN1</text>
+  <text x="493" y="468" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">IN2</text>
+  <text x="493" y="520" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">IN3</text>
+  <text x="493" y="572" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">IN4</text>
+  <text x="493" y="624" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">ENB</text>
+
+  
+  <text x="395" y="674" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#991b1b">Jumpers ENA e ENB: removidos</text>
+  <text x="395" y="692" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#991b1b">Jumper "ativa 5V": colocado</text>
+
+  
+  <rect x="285" y="794" width="220" height="64" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.8" />
+  <text x="395" y="821" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#0f172a">Motor Direito (R) + roda</text>
+  <text x="395" y="841" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="400" fill="#475569">DC 3–6 V · disco encoder 20 furos</text>
+  
+  <line x1="357" y1="738" x2="357" y2="794" stroke="#475569" stroke-width="2.4" />
+  <line x1="433" y1="738" x2="433" y2="794" stroke="#475569" stroke-width="2.4" />
+
+  
+  <rect x="36" y="336" width="132" height="126" rx="10" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" />
+  <text x="48" y="362" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#0f172a">Fonte 1</text>
+  <text x="48" y="390" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#dc2626">9 V</text>
+  <text x="48" y="412" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">Alimenta a</text>
+  <text x="48" y="427" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">Ponte H</text>
+  <text x="48" y="442" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">(L298N)</text>
+
+  <text x="158" y="382" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#1e293b">−</text>
+  <text x="158" y="426" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#dc2626">+</text>
+
+  
+  <line x1="168" y1="378" x2="285" y2="378" stroke="#1e293b" stroke-width="2.4" />
+  <circle cx="210" cy="378" r="4" fill="#1e293b" />
+  <line x1="168" y1="422" x2="285" y2="422" stroke="#dc2626" stroke-width="2.5" />
+  <text x="226" y="414" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#dc2626">+9 V</text>
+
+  
+  <text x="36" y="494" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#334155">Recomendado:</text>
+  <text x="36" y="512" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">• chave liga/desliga</text>
+  <text x="44" y="527" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">nas fontes 9 V e 6 V</text>
+  <text x="36" y="545" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">• fusível em série</text>
+
+  
+  <line x1="505" y1="360" x2="778" y2="360" stroke="#2563eb" stroke-width="2.3" />
+  <text x="641" y="352" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#2563eb">PWM motor E (L) · GPIO 4</text>
+
+  <line x1="505" y1="412" x2="778" y2="412" stroke="#15803d" stroke-width="2.3" />
+  <text x="641" y="404" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#15803d">sentido E (L) · GPIO 5</text>
+
+  <line x1="505" y1="464" x2="778" y2="464" stroke="#15803d" stroke-width="2.3" />
+  <text x="641" y="456" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#15803d">sentido E (L) · GPIO 6</text>
+
+  <line x1="505" y1="516" x2="778" y2="516" stroke="#15803d" stroke-width="2.3" />
+  <text x="641" y="508" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#15803d">sentido D (R) · GPIO 0</text>
+
+  <line x1="505" y1="568" x2="778" y2="568" stroke="#15803d" stroke-width="2.3" />
+  <text x="641" y="560" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#15803d">sentido D (R) · GPIO 1</text>
+
+  <line x1="505" y1="620" x2="778" y2="620" stroke="#2563eb" stroke-width="2.3" />
+  <text x="641" y="612" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#2563eb">PWM motor D (R) · GPIO 3</text>
+
+  
+  <rect x="778" y="242" width="224" height="548" rx="12" fill="#e6ecf8" stroke="#1e3a8a" stroke-width="1.8" />
+  <text x="890" y="286" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15.5" font-weight="700" fill="#0f172a">ESP32-C3 SuperMini</text>
+  <text x="890" y="304" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="400" fill="#475569">Microcontrolador · BLE NimBLE</text>
+
+  
+  <text x="828" y="260" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#334155">5V</text>
+  <text x="876" y="260" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#334155">GND</text>
+  <text x="820" y="218" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#b45309">+5 V</text>
+
+  
+  <path d="M 876 88 L 876 115 A 7 7 0 0 1 876 129 L 876 242" fill="none" stroke="#1e293b" stroke-width="2.4" />
+  <circle cx="876" cy="88" r="4" fill="#1e293b" />
+  <text x="884" y="218" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#1e293b">GND</text>
+
+  
+  <text x="790" y="364" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">GPIO 4</text>
+  <text x="790" y="416" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">GPIO 5</text>
+  <text x="790" y="468" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">GPIO 6</text>
+  <text x="790" y="520" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">GPIO 0</text>
+  <text x="790" y="572" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">GPIO 1</text>
+  <text x="790" y="624" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">GPIO 3</text>
+
+  
+  <text x="990" y="300" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#1e3a8a">GPIO 10</text>
+  <text x="990" y="396" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#1e3a8a">GPIO 21</text>
+  <text x="990" y="446" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#1e3a8a">GPIO 20</text>
+  <text x="990" y="544" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">GPIO 7</text>
+  <text x="990" y="608" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">3V3</text>
+  <text x="990" y="672" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">GND</text>
+  <text x="990" y="736" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" fill="#334155">GPIO 8</text>
+
+  
+  <text x="890" y="766" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#b45309">Alimentado pelo 5V do L298N</text>
+  <text x="890" y="781" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="400" fill="#475569">Lógica interna: 3,3 V</text>
+
+  
+  <rect x="1024" y="114" width="174" height="106" rx="10" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" />
+  <text x="1036" y="138" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#0f172a">Fonte 2</text>
+  <text x="1036" y="164" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#ca8a04">6 V</text>
+  <text x="1036" y="183" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">Somente Servo SG90</text>
+  <text x="1036" y="198" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">e Sensor HC-SR04</text>
+
+  <text x="1188" y="142" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#1e293b">−</text>
+  <text x="1188" y="176" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#ca8a04">+</text>
+
+  
+  <polyline points="1198,138 1214,138 1214,88" fill="none" stroke="#1e293b" stroke-width="2.4" />
+  <circle cx="1214" cy="88" r="4" fill="#1e293b" />
+
+  
+  <polyline points="1198,172 1446,172 1446,392 1410,392" fill="none" stroke="#ca8a04" stroke-width="2.5" />
+  <text x="1328" y="164" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#a16207">+6 V (Servo e Sensor)</text>
+
+  
+  <rect x="1238" y="178" width="172" height="122" rx="10" fill="#fef9c3" stroke="#a16207" stroke-width="1.8" />
+  <text x="1324" y="203" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#0f172a">Servo SG90</text>
+  <text x="1324" y="219" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">Micro Servo (varredura)</text>
+  <text x="1250" y="244" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">VCC (vermelho)</text>
+  <text x="1250" y="270" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">GND (marrom)</text>
+  <text x="1250" y="294" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">Sinal (laranja)</text>
+
+  
+  <line x1="1446" y1="240" x2="1410" y2="240" stroke="#ca8a04" stroke-width="2.4" />
+  <circle cx="1446" cy="240" r="4" fill="#ca8a04" />
+
+  
+  <path d="M 1474 266 L 1453 266 A 7 7 0 0 1 1439 266 L 1410 266" fill="none" stroke="#1e293b" stroke-width="2.4" />
+  <circle cx="1474" cy="266" r="4" fill="#1e293b" />
+
+  
+  <polyline points="1002,296 1120,296 1120,290 1238,290" fill="none" stroke="#ea580c" stroke-width="2.4" />
+  <text x="1120" y="284" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#ea580c">PIN_SERVO · GPIO 10</text>
+
+  
+  <rect x="1238" y="330" width="172" height="148" rx="10" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.8" />
+  <text x="1324" y="354" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="700" fill="#0f172a">Sensor HC-SR04</text>
+  <text x="1324" y="370" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">Ultrassônico (distância)</text>
+  <text x="1250" y="396" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">VCC (+6 V)</text>
+  <text x="1250" y="420" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">TRIG</text>
+  <text x="1250" y="444" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">ECHO</text>
+  <text x="1250" y="468" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">GND</text>
+
+  
+  <polyline points="1002,392 1120,392 1120,416 1238,416" fill="none" stroke="#0284c7" stroke-width="2.4" />
+  <text x="1120" y="384" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#0284c7">PIN_TRIG · GPIO 21</text>
+
+  
+  <line x1="1238" y1="440" x2="1182" y2="440" stroke="#0d9488" stroke-width="2.4" />
+  
+  <rect x="1142" y="433" width="40" height="14" rx="2" fill="#ffffff" stroke="#0f172a" stroke-width="1.5" />
+  <text x="1162" y="427" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#0f172a">1 kΩ</text>
+  
+  <line x1="1142" y1="440" x2="1002" y2="440" stroke="#0d9488" stroke-width="2.4" />
+  <circle cx="1120" cy="440" r="3.5" fill="#0d9488" />
+  <text x="1060" y="432" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#0d9488">PIN_ECHO · GPIO 20</text>
+  
+  <line x1="1120" y1="440" x2="1120" y2="454" stroke="#1e293b" stroke-width="1.8" />
+  <rect x="1113" y="454" width="14" height="32" rx="2" fill="#ffffff" stroke="#0f172a" stroke-width="1.5" />
+  <text x="1133" y="474" font-family="Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#0f172a">2 kΩ</text>
+  
+  <line x1="1120" y1="486" x2="1120" y2="498" stroke="#1e293b" stroke-width="1.8" />
+  <line x1="1110" y1="498" x2="1130" y2="498" stroke="#1e293b" stroke-width="2" />
+  <line x1="1113" y1="503" x2="1127" y2="503" stroke="#1e293b" stroke-width="1.6" />
+  <line x1="1116" y1="508" x2="1124" y2="508" stroke="#1e293b" stroke-width="1.4" />
+
+  
+  <rect x="1238" y="494" width="172" height="164" rx="10" fill="#e6f2ea" stroke="#166534" stroke-width="1.8" />
+  <text x="1324" y="516" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="700" fill="#0f172a">LM393 Esquerdo (L)</text>
+  <text x="1324" y="531" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">lê o disco do motor E</text>
+  <text x="1250" y="556" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">D0</text>
+  <text x="1250" y="588" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">VCC</text>
+  <text x="1250" y="620" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">GND</text>
+  <text x="1324" y="646" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="400" fill="#475569">A0: não usado</text>
+
+  
+  <rect x="1238" y="682" width="172" height="156" rx="10" fill="#e6f2ea" stroke="#166534" stroke-width="1.8" />
+  <text x="1324" y="704" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="700" fill="#0f172a">LM393 Direito (R)</text>
+  <text x="1324" y="719" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#475569">lê o disco do motor D</text>
+  <text x="1250" y="744" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">GND</text>
+  <text x="1250" y="776" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">VCC</text>
+  <text x="1250" y="808" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#334155">D0</text>
+  <text x="1324" y="828" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="400" fill="#475569">A0: não usado</text>
+
+  
+  
+  <polyline points="1002,540 1188,540 1188,552 1238,552" fill="none" stroke="#7c3aed" stroke-width="2.3" />
+  <text x="1095" y="532" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#7c3aed">D0 encoder E (L) · GPIO 7</text>
+
+  
+  <polyline points="1002,732 1072,732 1072,804 1238,804" fill="none" stroke="#7c3aed" stroke-width="2.3" />
+  <text x="1154" y="796" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#7c3aed">D0 encoder D (R) · GPIO 8</text>
+
+  
+  <line x1="1002" y1="604" x2="1120" y2="604" stroke="#be185d" stroke-width="2.3" />
+  <text x="1061" y="596" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#be185d">3V3</text>
+  <circle cx="1120" cy="604" r="3.8" fill="#be185d" />
+  <polyline points="1120,604 1120,584 1238,584" fill="none" stroke="#be185d" stroke-width="2.3" />
+  <polyline points="1120,604 1120,772 1238,772" fill="none" stroke="#be185d" stroke-width="2.3" />
+
+  
+  <path d="M 1002 668 L 1113 668 A 7 7 0 0 1 1127 668 L 1172 668" fill="none" stroke="#1e293b" stroke-width="2.3" />
+  <circle cx="1172" cy="668" r="3.8" fill="#1e293b" />
+  <polyline points="1172,668 1172,616 1238,616" fill="none" stroke="#1e293b" stroke-width="2.3" />
+  <polyline points="1172,668 1172,740 1238,740" fill="none" stroke="#1e293b" stroke-width="2.3" />
+
+  
+  <g fill="#ffffff" stroke="#1e293b" stroke-width="1.6">
+    
+    <circle cx="168" cy="378" r="3.8" />
+    <circle cx="168" cy="422" r="3.8" />
+    
+    <circle cx="1198" cy="138" r="3.8" />
+    <circle cx="1198" cy="172" r="3.8" />
+    
+    <circle cx="285" cy="334" r="3.8" />
+    <circle cx="285" cy="378" r="3.8" />
+    <circle cx="285" cy="422" r="3.8" />
+    <circle cx="357" cy="262" r="3.8" />
+    <circle cx="433" cy="262" r="3.8" />
+    <circle cx="357" cy="738" r="3.8" />
+    <circle cx="433" cy="738" r="3.8" />
+    <circle cx="505" cy="360" r="3.8" />
+    <circle cx="505" cy="412" r="3.8" />
+    <circle cx="505" cy="464" r="3.8" />
+    <circle cx="505" cy="516" r="3.8" />
+    <circle cx="505" cy="568" r="3.8" />
+    <circle cx="505" cy="620" r="3.8" />
+    
+    <circle cx="828" cy="242" r="3.8" />
+    <circle cx="876" cy="242" r="3.8" />
+    <circle cx="778" cy="360" r="3.8" />
+    <circle cx="778" cy="412" r="3.8" />
+    <circle cx="778" cy="464" r="3.8" />
+    <circle cx="778" cy="516" r="3.8" />
+    <circle cx="778" cy="568" r="3.8" />
+    <circle cx="778" cy="620" r="3.8" />
+    <circle cx="1002" cy="296" r="3.8" />
+    <circle cx="1002" cy="392" r="3.8" />
+    <circle cx="1002" cy="440" r="3.8" />
+    <circle cx="1002" cy="540" r="3.8" />
+    <circle cx="1002" cy="604" r="3.8" />
+    <circle cx="1002" cy="668" r="3.8" />
+    <circle cx="1002" cy="732" r="3.8" />
+    
+    <circle cx="1410" cy="240" r="3.8" />
+    <circle cx="1410" cy="266" r="3.8" />
+    <circle cx="1238" cy="290" r="3.8" />
+    
+    <circle cx="1410" cy="392" r="3.8" />
+    <circle cx="1238" cy="416" r="3.8" />
+    <circle cx="1238" cy="440" r="3.8" />
+    <circle cx="1410" cy="464" r="3.8" />
+    
+    <circle cx="1238" cy="552" r="3.8" />
+    <circle cx="1238" cy="584" r="3.8" />
+    <circle cx="1238" cy="616" r="3.8" />
+    <circle cx="1238" cy="740" r="3.8" />
+    <circle cx="1238" cy="772" r="3.8" />
+    <circle cx="1238" cy="804" r="3.8" />
+  </g>
+
+  
+  <line x1="36" y1="884" x2="1564" y2="884" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="36" y="906" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#0f172a">Legenda</text>
+
+  <line x1="36" y1="924" x2="66" y2="924" stroke="#dc2626" stroke-width="3" />
+  <text x="72" y="928" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#1e293b">+9 V (Ponte H)</text>
+
+  <line x1="168" y1="924" x2="198" y2="924" stroke="#d97706" stroke-width="3" />
+  <text x="204" y="928" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#1e293b">+5 V (L298N → ESP32)</text>
+
+  <line x1="344" y1="924" x2="374" y2="924" stroke="#ca8a04" stroke-width="3" />
+  <text x="380" y="928" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#1e293b">+6 V (Servo e Sensor)</text>
+
+  <line x1="514" y1="924" x2="544" y2="924" stroke="#be185d" stroke-width="3" />
+  <text x="550" y="928" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#1e293b">3,3 V (Encoders)</text>
+
+  <line x1="654" y1="924" x2="684" y2="924" stroke="#1e293b" stroke-width="3" />
+  <text x="690" y="928" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#1e293b">GND comum</text>
+
+  <line x1="776" y1="924" x2="806" y2="924" stroke="#2563eb" stroke-width="3" />
+  <text x="812" y="928" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#1e293b">PWM Motores</text>
+
+  <line x1="904" y1="924" x2="934" y2="924" stroke="#15803d" stroke-width="3" />
+  <text x="940" y="928" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#1e293b">Sentido (IN1–IN4)</text>
+
+  <line x1="1054" y1="924" x2="1084" y2="924" stroke="#7c3aed" stroke-width="3" />
+  <text x="1090" y="928" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#1e293b">Encoders (D0)</text>
+
+  <line x1="1186" y1="924" x2="1216" y2="924" stroke="#ea580c" stroke-width="3" />
+  <text x="1222" y="928" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#1e293b">Servo (GPIO 10)</text>
+
+  <line x1="1328" y1="924" x2="1358" y2="924" stroke="#0284c7" stroke-width="3" />
+  <text x="1364" y="928" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#1e293b">TRIG (GPIO 21)</text>
+
+  <line x1="1468" y1="924" x2="1498" y2="924" stroke="#0d9488" stroke-width="3" />
+  <text x="1504" y="928" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#1e293b">ECHO (GPIO 20)</text>
+
+  <text x="36" y="952" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#334155">1. A Fonte 1 (+9 V) alimenta a Ponte H L298N (+12V / VMS), e a saída regulada +5V da ponte H (com jumper "ativa 5V" colocado) alimenta o pino 5V do ESP32. A Fonte 2 (+6 V) alimenta exclusivamente o Servo SG90 e o sensor HC-SR04.</text>
+  <text x="36" y="969" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#334155">2. Como o HC-SR04 é alimentado em 6 V, o pino ECHO entrega pulso acima de 3,3 V: o divisor resistivo (1 kΩ em série + 2 kΩ ao GND) reduz o sinal para nível lógico seguro antes de entrar no GPIO 20.</text>
+  <text x="36" y="986" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#334155">3. Desconecte o fio +5V vindo do L298N sempre que conectar o cabo USB ao ESP32 para não alimentar a placa por duas fontes ao mesmo tempo. Os encoders LM393 operam em 3,3 V (3V3) nos pinos GPIO 7 e GPIO 8.</text>
+</svg>
